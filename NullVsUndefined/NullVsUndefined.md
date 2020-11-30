@@ -19,7 +19,7 @@
 
 ## Null
 
-```typescript
+```typescript []
 const a = null;
 typeof a; // "object"
 Number(a); // 0
@@ -55,7 +55,7 @@ https://www.lucidchart.com/techblog/2015/08/31/the-worst-mistake-of-computer-sci
 
 ## Undefined
 
-```typescript
+```typescript []
 let a; // or const a = undefined;
 typeof a; // "undefined"
 Number(a); // NaN -> means Not-A-Number
@@ -88,7 +88,7 @@ NaN == undefined; // false
 
 ## Typescript
 
-```typescript
+```typescript []
 interface IProfile {
   name: string;
   age: number;
@@ -120,7 +120,7 @@ getProfile2(1); // ok
 
 ## Null vs Undefined
 
-```typescript
+```typescript []
 null == undefined; // true
 isNil(null); // true
 isNil(undefined); // true
@@ -145,7 +145,7 @@ JSON.stringify([undefined, undefined]) // "[null,null]"
 
 ## Null only situation
 
-```typescript
+```typescript []
 sendToAPI(
   guid: string,
   profile: {address?: string | null}
@@ -170,7 +170,7 @@ sendToAPI(
 
 ## Null only situation #2
 
-```typescript
+```typescript []
 knexUpdateProfile(
   guid: string,
   profile: {address?: string | null}
@@ -192,7 +192,7 @@ knexUpdateProfile(
 --
 
 ## Undefined only situation
-```typescript
+```typescript []
 interface IProfile {
   name: string;
   address? string;
@@ -218,7 +218,7 @@ function getProfile(): IProfile {
 
 - accepts **null** and **undefined** for arguments/input
 
-```graphql
+```graphql []
 type Mutation {
   test(testString: String): TestStructure
 }
@@ -232,16 +232,18 @@ type TestStructure {
 
 ## Resolver
 
-```typescript
+```typescript []
 const resolvers: IResolvers = {
   Mutation: {
-    test: (_, {testString: string | null | undefined}) => {
+    test: (_, {testString: string | null | undefined})
+    => {
       console.log('test', {testString});
       return {};
     },
   },
   TestStructure: {
-    test1: (_, {testString: string | null | undefined}) => {
+    test1: (_, {testString: string | null | undefined})
+    => {
       console.log('test1', {testString});
       return true;
     },
@@ -255,7 +257,7 @@ const resolvers: IResolvers = {
 
 <div>
 
-```graphql
+```graphql []
 mutation {
   a: test(testString: "123") {
     test1(testString: "123")
@@ -272,7 +274,7 @@ mutation {
 }
 ```
 
-```javascript
+```javascript []
 test {testString: '123'}
 test1 {testString: '123'}
 test {testString: ''}
@@ -283,7 +285,7 @@ test {testString: undefined}
 test1 {testString: undefined}
 ```
 
-</div><!-- .element: style="margin: 0 auto; height: 80vh; overflow-y: auto;" -->
+</div><!-- .element: style="margin: 0 auto; height: 75vh; overflow-y: auto;" -->
 
 ---
 

@@ -51,7 +51,8 @@
 
 ## REST vs GraphQL
 
-![Image](./GraphQL/REST vs GraphQL.png)
+![Image](./GraphQL/REST_vs_GraphQL.png)
+<br />
 multiple REST roundtrips vs one GraphQL request
 
 ---
@@ -87,7 +88,7 @@ multiple REST roundtrips vs one GraphQL request
   - Hypermedia links (Included Relationship or Endpoint)
     - /job/{id}
 
-```js
+```json []
 {
   "id": 1,
   "jobPostId": "JOB-123",
@@ -109,9 +110,7 @@ multiple REST roundtrips vs one GraphQL request
 }
 ```
 
-<!-- .element: class="line-numbers" -->
-
-</div><!-- .element: style="margin: 0 auto; height: 80vh; overflow-y: auto;" -->
+</div><!-- .element: style="margin: 0 auto; height: 75vh; overflow-y: auto;" -->
 
 --
 
@@ -134,7 +133,7 @@ multiple REST roundtrips vs one GraphQL request
 
 --
 
-![Image](./GraphQL/api making.jpeg)<!-- .element: style="width: 80%" -->
+![Image](./GraphQL/api_making.jpeg)<!-- .element: style="width: 80%" -->
 
 ---
 
@@ -153,10 +152,8 @@ multiple REST roundtrips vs one GraphQL request
 
 ## Wrapping/Taming REST API with GraphQL
 
-<div style="position: relative;">
 ![Image](./GraphQL/wrapped.jpg)<!-- .element: style="width: 80%;" -->
-![Image](./GraphQL/cross.png)<!-- .element: class="fragment" style="position: absolute; top: 45%; left: 50%; height: 100%; background: none; transform: translate(-50%, -50%); border: none;" -->
-</div>
+![Image](./GraphQL/cross.png)<!-- .element: class="fragment" style="position: absolute; top: 45%; left: 50%; height: 50%; background: none; transform: translate(-50%, -50%); border: none;" -->
 
 https://technology.fairfaxmedia.co.nz/taming-rest-apis-using-graphql/
 

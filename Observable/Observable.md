@@ -10,7 +10,7 @@ Let's take a look on the evolution of the asynchronous codes in Javascript
 
 ## callback
 
-```js
+```js []
 const fs = require("fs");
 fs.readFile("input", "utf8", (err, data) => {
   if (err) {
@@ -27,8 +27,6 @@ fs.readFile("input", "utf8", (err, data) => {
 });
 ```
 
-<!-- .element: class="line-numbers" -->
-
 <span class="fragment">hard to read and reason</span><br/>
 <span class="fragment">error handling boilderplate everywhere</span>
 
@@ -36,7 +34,7 @@ fs.readFile("input", "utf8", (err, data) => {
 
 ## callback hell
 
-```js
+```js []
 getUserData("username", (err, userdata) => {
   if (err) {
     logError(err);
@@ -61,8 +59,6 @@ getUserData("username", (err, userdata) => {
 });
 ```
 
-<!-- .element: class="line-numbers" -->
-
 Note:
 very deep nested functions make the code unreadable<br/>
 `id` variable in the order cannot be reused
@@ -71,21 +67,20 @@ very deep nested functions make the code unreadable<br/>
 
 ## Promise
 
-```js
+```js []
 const { promisify } = require("util");
 const fs = require("fs");
 const readFileAsync = promisify(fs.readFile);
 const writeFileAsync = promisify(fs.writeFile);
 readFileAsync("input", "utf8")
   .then(data => processData(data))
-  .then(processedData => writeFileAsync("output", processedData))
+  .then(processedData =>
+    writeFileAsync("output", processedData))
   .then(() => {
     console.log("done");
   })
   .catch(err => logError(err));
 ```
-
-<!-- .element: class="line-numbers" -->
 
 Note:
 Promise with chainable `then` method<br/>
@@ -95,7 +90,7 @@ Node.js 8 has `util.promisify` to change the callback API to promise API
 
 ## Even better with async/await
 
-```js
+```js []
 const { promisify } = require("util");
 const fs = require("fs");
 const readFileAsync = promisify(fs.readFile);
@@ -111,8 +106,6 @@ const writeFileAsync = promisify(fs.writeFile);
   }
 })();
 ```
-
-<!-- .element: class="line-numbers" -->
 
 Note:
 Needs async IIFE (immediately-invoked function expression)
@@ -130,13 +123,11 @@ Needs async IIFE (immediately-invoked function expression)
 
 ### Promisify everything?
 
-```js
+```js []
 window.addEventListener("click", event => {
   console.log(event.clientX, event.clientY);
 });
 ```
-
-<!-- .element: class="line-numbers" -->
 
 You can't promisify event listener (DOM Events) !!!<br/>
 <span class="fragment">and ...<br/><br/></span>
@@ -155,20 +146,21 @@ To solve this, we need another interface to solve the issue
 
 ## Observable
 
-- multiple values over time<!-- .element: class="fragment" -->
-- allows cancellation<!-- .element: class="fragment" -->
-- use standard combinators to filter<br/>and map the events in the stream<!-- .element: class="fragment" -->
-- lazy<!-- .element: class="fragment" -->
-- <!-- .element: class="fragment" -->[ES Stage 1 proposal](https://github.com/tc39/proposal-observable)
+<ul>
+  <li>multiple values over time</li><!-- .element: class="fragment" -->
+  <li>allows cancellation</li><!-- .element: class="fragment" -->
+  <li>use standard combinators to filter<br/>and map the events in the stream</li><!-- .element: class="fragment" -->
+  <li>lazy</li><!-- .element: class="fragment" -->
+  <li><a href="https://github.com/tc39/proposal-observable">ES Stage 1 proposal</a></li><!-- .element: class="fragment" -->
+</ul>
 
 ---
 
 ## Promise vs Observable
 
-<div>
-Promise
+### Promise
 
-```js
+```js []
 const promise = new Promise((resolve, reject) => {
   ajaxCall((err, data) => {
     if (err) {
@@ -180,11 +172,13 @@ const promise = new Promise((resolve, reject) => {
 });
 ```
 
-<!-- .element: class="line-numbers" -->
+--
 
-Observable
+## Promise vs Observable
 
-```js
+### Observable
+
+```js []
 const observable = new Observable(observer => {
   const request = ajaxCall((err, data) => {
     if (err) {
@@ -200,18 +194,13 @@ const observable = new Observable(observer => {
 });
 ```
 
-<!-- .element: class="line-numbers" -->
-
-</div><!-- .element: style="margin: 0 auto; height: 80vh; overflow-y: auto;" -->
-
 --
 
 ## To execute
 
-<div>
-Promise
+### Promise
 
-```js
+```js []
 promise
   .then(data => {
     console.log(data);
@@ -221,11 +210,13 @@ promise
   });
 ```
 
-<!-- .element: class="line-numbers" -->
+--
 
-Observable
+## To execute
 
-```js
+### Observable
+
+```js []
 const subscription = observable.subscribe({
   next(data) {
     console.log(data);
@@ -239,10 +230,6 @@ const subscription = observable.subscribe({
 });
 subscription.unsubscribe();
 ```
-
-<!-- .element: class="line-numbers" -->
-
-</div><!-- .element: style="margin: 0 auto; height: 80vh; overflow-y: auto;" -->
 
 ---
 
@@ -287,7 +274,8 @@ ReactiveX is a library for composing asynchronous and event-based programs by us
 
 ### ReactiveX
 
-<iframe src="http://reactivex.io/languages.html"></iframe><!-- .element: style="width: 100vw; height: 80vh;" -->
+<iframe src="http://reactivex.io/languages.html"></iframe><!-- .element: style="width: 100vw; height: 50vh;" -->
+
 [Image](./Observable/ReactiveX.png)
 
 Note:
@@ -307,10 +295,9 @@ Implemented in many programming languages: Java, .Net, Scala, Clojure, Swift and
 
 ## Transform data
 
-<div>
-Promise
+### Promise
 
-```js
+```js []
 promise
   .then(items => {
     console.log(items);
@@ -328,9 +315,11 @@ promise
   });
 ```
 
-<!-- .element: class="line-numbers" -->
+--
 
-RxJS 6
+## Transform data
+
+### RxJS 6
 
 ```js
 observable
@@ -341,10 +330,6 @@ observable
   .do(console.log);
 ```
 
-<!-- .element: class="line-numbers" -->
-
-</div><!-- .element: style="margin: 0 auto; height: 80vh; overflow-y: auto;" -->
-
 Note:
 Much more cleaner
 
@@ -352,7 +337,9 @@ Much more cleaner
 
 ### Autocomplete with lodash, callback, superagent
 
-```js
+<div>
+
+```js []
 let apiRequest;
 const inputCallback = _.debounce(autoComplete, 200);
 inputElement.addEventListener('keyup', inputCallback);
@@ -377,14 +364,15 @@ function autoComplete(event) => {
 };
 ```
 
-<!-- .element: class="line-numbers" -->
+</div><!-- .element: style="margin: 0 auto; height: 70vh; overflow-y: auto;" -->
 
 --
 
 ### Autocomplete with RxJS
 
-```js
-const inputStream$ = Observable.fromEvent(inputElement, "keyup");
+```js []
+const inputStream$ =
+  Observable.fromEvent(inputElement, "keyup");
 const autoComplete$ = inputStream$
   .debounceTime(200)
   .map(event => event.target.value.trim())
@@ -401,8 +389,6 @@ autoComplete$.subscribe({
   }
 });
 ```
-
-<!-- .element: class="line-numbers" -->
 
 ---
 
