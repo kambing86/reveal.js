@@ -101,7 +101,13 @@ Note: duplicated efforts, common practice should be having a devops team to coor
 
 ### Trying to fly before you can walk
 
-- attempting to adopt the microservice architecture (an advanced technique) without (or not committing to) practicing basic software development techniques, such as clean code, good design, and automated testing<!-- .element: class="fragment" -->
+<div class="r-stack">
+
+![Image](./Microservices/microservice_prerequisites.png)<!-- .element: class="fragment fade-in-then-out" -->
+
+attempting to adopt the microservice architecture (an advanced technique) without (or not committing to) practicing basic software development techniques, such as clean code, good design, and automated testing<!-- .element: class="fragment" -->
+
+</div>
 
 Note: using microservices is going to have a cost, and with bad code quality, microservices get more pain than gain
 
@@ -130,9 +136,17 @@ Note: Each additional service makes development, testing and deployment more com
 
 ### Red flag act
 
+<div class="r-stack">
+
+![Image](./Microservices/red_flag.jpeg)<!-- .element: class="fragment fade-in-then-out" -->
+
+<div>
+
 - taken from the 19th century Ref flag act that were passed in the US and UK<!-- .element: class="fragment" -->
 - required a pedestrian to walk in front of each automobile waving a red flag to warn the drivers and riders of horses<!-- .element: class="fragment" -->
 - the automobile is forced to travel at the same speed as a pedestrian<!-- .element: class="fragment" -->
+
+</div>
 
 --
 
@@ -165,7 +179,7 @@ Note: should change everything (incrementally)
   </p>
 </blockquote>
 
-Note: Conway is perhaps most famous for developing the concept of coroutines
+Note: Conway is perhaps most famous for developing the concept of coroutines. A team should ideally own just one service since that’s sufficient to ensure team autonomy and loose coupling and each additional service adds complexity and overhead. A team should only deploy its code as multiple services if it solves a tangible problem, such as significantly reducing lead time or improving scalability or fault tolerance.
 
 </div>
 
@@ -196,9 +210,9 @@ Note: Conway is perhaps most famous for developing the concept of coroutines
 
 ### Example of temporal coupling
 
-- Imagine if you have 50 microservices with 99% of availability<!-- .element: class="fragment" -->
-- 0.99 ^ 50 ≈ 0.605<!-- .element: class="fragment" -->
-- if you have one interaction that only use 10 microservices, the availability is about 0.904<!-- .element: class="fragment" -->
+- Imagine if you have 20 microservices with 99% of availability<!-- .element: class="fragment" -->
+- 0.99 ^ 20 ≈ 0.82<!-- .element: class="fragment" -->
+- your browser might get timeout from server, due to the total time of the whole complex interaction exceed 60 seconds.<!-- .element: class="fragment" -->
 
 --
 
@@ -207,7 +221,7 @@ Note: Conway is perhaps most famous for developing the concept of coroutines
 ### Reduce tight coupling
 
 - Carefully consider how services interact<!-- .element: class="fragment" -->
-- Intermediate Status with asynchronous interaction<!-- .element: class="fragment" -->
+- Intermediate Status with asynchronous communication<!-- .element: class="fragment" -->
 - Message Queue / Broker, eg. RabbitMQ<!-- .element: class="fragment" -->
 - Event Streaming, eg. Apache Kafka<!-- .element: class="fragment" -->
 
@@ -215,9 +229,17 @@ Note: respond immediately without doing the complex processing
 
 --
 
-## Decentralised (Event-driven Architecture)
+### Sync vs Async Communication across Microservices
+
+![Image](./Microservices/sync-vs-async-patterns-across-microservices.png)
+
+--
+
+### Decentralised (Event-driven Architecture/Saga)
 
 ![Image](./Microservices/decentrialized.png)<!-- .element: style="background: #fff;" -->
+
+Note: 2 Phase Commit(2PC) to Saga
 
 ---
 
@@ -226,11 +248,10 @@ Note: respond immediately without doing the complex processing
 ### Shared Database
 
 - A database is shared by multiple services<!-- .element: class="fragment" -->
-- A change to the table affects multiple services<!-- .element: class="fragment" -->
+- A change to the table affects multiple services, require coordination across teams<!-- .element: class="fragment" -->
 - Service isolation is impossible<!-- .element: class="fragment" -->
-- Example: User service accesses to Payment Table<!-- .element: class="fragment" -->
 
-Note: usually caused by splitting one microservice to 2, or transition from monolith to microservices
+Note: usually caused by splitting one microservice to 2, or transition from monolith to microservices, (no failure isolation, deadlock might happened)
 
 --
 
@@ -239,6 +260,7 @@ Note: usually caused by splitting one microservice to 2, or transition from mono
 ### Database per service
 
 <ul>
+  <li>Duplicate the DB to the microservice, then dedupe data</li>
   <li>Other services <b>MUST ONLY</b> able to access the data through API</li><!-- .element: class="fragment" -->
 </ul>
 
@@ -284,5 +306,12 @@ Note: usually caused by splitting one microservice to 2, or transition from mono
 ## References
 
 <ul>
+  <li><a href="https://www.redhat.com/en/topics/microservices/what-are-microservices">What are microservices?</a></li>
+  <li><a href="https://docs.microsoft.com/en-us/dotnet/architecture/microservices/architect-microservice-container-applications/direct-client-to-microservice-communication-versus-the-api-gateway-pattern">The API gateway pattern versus the Direct client-to-microservice communication</a></li>
+  <li><a href="https://micro-frontends.org/">Micro frontends</a></li>
   <li><a href="https://microservices.io/microservices/antipatterns/-/the/series/2019/06/18/microservices-adoption-antipatterns.html">Microservices adoption antipatterns</a></li>
+  <li><a href="https://techbeacon.com/app-dev-testing/want-develop-great-microservices-reorganize-your-team">Want to develop great microservices? Reorganize your team</a></li>
+  <li><a href="https://microservices.io/patterns/decomposition/service-per-team.html">Service per team</a></li>
+  <li><a href="https://docs.microsoft.com/en-us/dotnet/architecture/microservices/architect-microservice-container-applications/communication-in-microservice-architecture">Communication in a microservice architecture</a></li>
+  <li><a href="https://dzone.com/articles/event-driven-orchestration-an-effective-microservi">Event-Driven Orchestration</a></li>
 </ul>
