@@ -1,4 +1,4 @@
-# Microservices Traps and Anit-patterns
+# Microservices Anti-patterns
 
 ## Prepared by Chua Kang Ming
 
@@ -10,7 +10,31 @@
 
 ![Image](./Microservices/tenor.gif)<!-- .element: class="fragment" -->
 
-Note: is it something related to the another buzzword from Amazon as well? Agile.
+Note: is it related to the another buzzword from Amazon as well? Agile.
+
+--
+
+## Bare Minimum Microservice
+
+![Image](./Microservices/bare_minimum.png)<!-- .element: class="fragment" -->
+
+Note: no kubernetes back in 2015, just have EC2 in AWS and deploy, then we have ECS(2015) and EKS(2018) in AWS lately
+
+--
+
+## Modern approach
+
+<div class="r-stack">
+
+![Image](./Microservices/api_gateway.png)<!-- .element: class="fragment fade-in-then-out" -->
+
+![Image](./Microservices/monolith-frontback-microservices.png)<!-- .element: class="fragment fade-in-then-out" -->
+
+![Image](./Microservices/verticals-headline.png)<!-- .element: class="fragment fade-in-then-out" -->
+
+</div>
+
+Note: BFF(Backend for Frontend)/API Gateway might be doing load balancing, service discovery integration, logging, tracing, authentication and authorization
 
 --
 
@@ -22,12 +46,25 @@ Note: is it something related to the another buzzword from Amazon as well? Agile
 - Independently deployable<!-- .element: class="fragment" -->
 - Organized around business capabilities<!-- .element: class="fragment" -->
 - Owned by a small team<!-- .element: class="fragment" -->
+- Main purpose is to make the application/team scalable<!-- .element: class="fragment" -->
 
 Note: Not the same as SOA (Service-Oriented Architecture), to put it simply, service-oriented architecture (SOA) has an enterprise scope, while the microservices architecture has an application scope.
 
+--
+
+## Cloud Native
+
+![Image](./Microservices/cloud-native-diagram.png)<!-- .element: class="fragment fade-in-then-out" -->
+
+Note: Cloud-native app development typically includes devops, agile methodology, microservices, cloud platforms, containers like Kubernetes and Docker, and continuous delivery—in short, every new and modern method of application deployment.
+
 ---
 
-## Traps
+## Anti-patterns
+
+---
+
+## Non-technical
 
 ### Microservices are a magic pixie dust
 
@@ -37,69 +74,104 @@ Note: not addressing development and deployment process, some still doing manual
 
 --
 
-## Traps
+## Non-technical
 
 ### Microservices as the goal
 
 - making the adoption of microservices the goal and measuring success in terms of the number of services written<!-- .element: class="fragment" -->
 
-Note: not addressing code quality
+Note: normally measuring the success in terms of the lead time (how soon the team can deploy a fix to production)
 
 --
 
-## Traps
+## Non-technical
 
 ### Scattershot adoption
 
-- multiple application development teams attempt to adopt the microservice architecture without any coordination<!-- .element: class="fragment" -->
+<ul>
+  <li>multiple application development teams attempt to adopt the microservice architecture without any coordination</li><!-- .element: class="fragment" -->
+  <li><a href="https://newsignature.com/articles/thinking-microservices-need-devops-first/">Thinking about Microservices? You need DevOps first</a></li><!-- .element: class="fragment" -->
+</ul>
 
 Note: duplicated efforts, common practice should be having a devops team to coordinate the deployment
 
 --
 
-## Traps
+## Non-technical
 
 ### Trying to fly before you can walk
 
 - attempting to adopt the microservice architecture (an advanced technique) without (or not committing to) practicing basic software development techniques, such as clean code, good design, and automated testing<!-- .element: class="fragment" -->
 
-Note: clean code, automated testing, well designed API
+Note: using microservices is going to have a cost, and with bad code quality, microservices get more pain than gain
 
 --
 
-## Traps
+## Non-technical
 
 ### Focussing on Technology
 
 - focussing on technology aspects of microservices, most commonly the deployment infrastructure, and neglecting key issues, such as service decomposition<!-- .element: class="fragment" -->
-- Docker, Kubernetes, Istio and Serverless<!-- .element: class="fragment" -->
+- Docker, Openshift, Kubernetes, Istio and Serverless<!-- .element: class="fragment" -->
 
 --
 
-## Traps
+## Non-technical
 
 ### More the merrier
 
 - intentionally creating a very fine-grained microservice architecture<!-- .element: class="fragment" -->
 
-Note: Each additional service makes development, testing and deployment more complicated, more overhead, start with one service per team, define more services only when it solves a problem
+Note: Each additional service makes development, testing and deployment more complicated, more overhead to deal with, start with one service per team, define more services only when it solves a problem
 
 --
 
-## Traps
+## Non-technical
 
 ### Red flag act
 
 - taken from the 19th century Ref flag act that were passed in the US and UK<!-- .element: class="fragment" -->
 - required a pedestrian to walk in front of each automobile waving a red flag to warn the drivers and riders of horses<!-- .element: class="fragment" -->
 - the automobile is forced to travel at the same speed as a pedestrian<!-- .element: class="fragment" -->
-- retaining the same development process and organization structure that were used when developing monolithic applications<!-- .element: class="fragment" -->
 
-Note: organization retains the same process and structure that were used when developing monolithic applications, should change everything (incrementally)
+--
+
+## Non-technical
+
+### Red flag act
+
+<div class="r-stack">
+
+![Image](./Microservices/bad_team.png)<!-- .element: class="fragment fade-in-then-out" -->
+
+retaining the same development process and organization structure that were used when developing monolithic applications<!-- .element: class="fragment fade-in-then-out" -->
+
+</div>
+
+Note: should change everything (incrementally)
+
+--
+
+### Red flag act
+
+<div class="r-stack">
+
+![Image](./Microservices/good_team.png)<!-- .element: class="fragment fade-in-then-out" -->
+
+<blockquote class="fragment fade-in-then-out">
+  <p>
+    Any organization that designs a system (defined broadly) will produce a design whose structure is a copy of the organization's communication structure.<br />
+    - Melvin Edward Conway (1967)
+  </p>
+</blockquote>
+
+Note: Conway is perhaps most famous for developing the concept of coroutines
+
+</div>
 
 ---
 
-## Anti-patterns
+## Technical
 
 ### Distribution is free
 
@@ -109,13 +181,13 @@ Note: organization retains the same process and structure that were used when de
 
 ---
 
-### Example of temporal coupling
+### Temporal coupling
 
 <div>
 
-![Image](./Microservices/temporal_coupling.png)<!-- .element: class="fragment" -->
+![Image](./Microservices/temporal-coupling.png)<!-- .element: class="fragment" -->
 
-- availability = availability(User Service) x availability(Payment Service)<!-- .element: class="fragment" -->
+- availability = availability(Order Service) x availability(Customer Service)<!-- .element: class="fragment" -->
 - 0.81 = 0.90 x 0.90<!-- .element: class="fragment" -->
 
 </div>
@@ -132,21 +204,24 @@ Note: organization retains the same process and structure that were used when de
 
 ## Solution
 
-### Intermediate State with Event Bus
+### Reduce tight coupling
 
-- Have a Pending Status for complex interaction<!-- .element: class="fragment" -->
+- Carefully consider how services interact<!-- .element: class="fragment" -->
+- Intermediate Status with asynchronous interaction<!-- .element: class="fragment" -->
 - Message Queue / Broker, eg. RabbitMQ<!-- .element: class="fragment" -->
 - Event Streaming, eg. Apache Kafka<!-- .element: class="fragment" -->
 
+Note: respond immediately without doing the complex processing
+
 --
 
-## Decentralised
+## Decentralised (Event-driven Architecture)
 
 ![Image](./Microservices/decentrialized.png)<!-- .element: style="background: #fff;" -->
 
 ---
 
-## Anti-patterns
+## Technical
 
 ### Shared Database
 
@@ -154,6 +229,8 @@ Note: organization retains the same process and structure that were used when de
 - A change to the table affects multiple services<!-- .element: class="fragment" -->
 - Service isolation is impossible<!-- .element: class="fragment" -->
 - Example: User service accesses to Payment Table<!-- .element: class="fragment" -->
+
+Note: usually caused by splitting one microservice to 2, or transition from monolith to microservices
 
 --
 
@@ -167,7 +244,7 @@ Note: organization retains the same process and structure that were used when de
 
 ---
 
-## Anti-patterns
+## Technical
 
 ### Unencapsulated service
 
@@ -185,7 +262,7 @@ Note: organization retains the same process and structure that were used when de
 
 ---
 
-## Anti-patterns
+## Technical
 
 ### Distributed Monolith
 
@@ -207,6 +284,5 @@ Note: organization retains the same process and structure that were used when de
 ## References
 
 <ul>
-  <li><a href="https://microservices.io/microservices/antipatterns/-/the/series/2019/06/18/microservices-adoption-antipatterns.html">Link 1</a></li>
-  <li><a href="http://chrisrichardson.net/post/antipatterns/2019/01/28/melbourne-microservices.html">Link 2</a></li>
+  <li><a href="https://microservices.io/microservices/antipatterns/-/the/series/2019/06/18/microservices-adoption-antipatterns.html">Microservices adoption antipatterns</a></li>
 </ul>
