@@ -10,7 +10,7 @@
 
 ![Image](./Microservices/tenor.gif)<!-- .element: class="fragment" -->
 
-Note: is it related to the another buzzword from Amazon as well? Agile.
+Note: I encountered this back in 2015, when I started to use node.js. is it related to the another buzzword from Amazon as well? Agile. It appears almost the same time, during the rise of Amazon. Before that there was SOA, but only big entreprise do that
 
 --
 
@@ -190,7 +190,7 @@ Note: Conway is perhaps most famous for developing the concept of coroutines. A 
 ### Distribution is free
 
 - Developers connect services as if they are calling another function synchronously<!-- .element: class="fragment" -->
-- IPC (REST API, gRPC) is slow and unreliable<!-- .element: class="fragment" -->
+- IPC is slow and unreliable<!-- .element: class="fragment" -->
 - Synchronous communication => temporal coupling => reduced availability<!-- .element: class="fragment" -->
 
 ---
